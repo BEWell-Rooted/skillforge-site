@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>함께 걷는 길 — 남한산성 십자가의 길</title>
+<meta name="description" content="2026 루카 청년회 하계 캠프 · 남한산성 순교성지 십자가의 길 미션 순례">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700;900&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FBF9F4;        /* 한지 */
+  --ink:#26221C;          /* 먹 */
+  --ink-soft:#5C554A;     /* 옅은 먹 */
+  --crimson:#8E1F2C;      /* 순교자 전례색 진홍 */
+  --crimson-deep:#6E1420;
+  --stone:#E9E4D8;        /* 성곽 돌빛 */
+  --line:#D8D2C4;
+  --gold:#A87C2A;         /* 금박 포인트 */
+  --wheat:#C9A24B;        /* 밀알 */
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{font-size:17px}
+body{
+  font-family:'Noto Sans KR',system-ui,sans-serif;
+  background:var(--paper);color:var(--ink);line-height:1.7;min-height:100vh;
+}
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;opacity:.35;z-index:0;
+  background-image:radial-gradient(circle at 20% 30%, rgba(0,0,0,.015) 0 2px, transparent 2px),
+                   radial-gradient(circle at 70% 60%, rgba(0,0,0,.02) 0 1.5px, transparent 1.5px),
+                   radial-gradient(circle at 45% 85%, rgba(0,0,0,.012) 0 2.5px, transparent 2.5px);
+  background-size:180px 180px, 240px 240px, 300px 300px;
+}
+.app{position:relative;z-index:1;max-width:480px;margin:0 auto;padding:0 20px 80px}
+
+/* ── 헤더 ── */
+header{
+  padding:20px 0 14px;border-bottom:3px double var(--line);
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+}
+.brand{font-family:'Noto Serif KR',serif;font-weight:700;font-size:.95rem;letter-spacing:.14em;color:var(--crimson);text-decoration:none}
+.brand small{display:block;font-family:'Noto Sans KR',sans-serif;font-weight:400;font-size:.68rem;letter-spacing:.22em;color:var(--ink-soft)}
+.head-right{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
+.progress-pill{font-size:.75rem;color:var(--ink-soft);background:var(--stone);padding:4px 12px;border-radius:999px;white-space:nowrap}
+.progress-pill b{color:var(--crimson);font-weight:700}
+.pair-pill{
+  font-size:.72rem;color:var(--paper);background:var(--wheat);padding:3px 12px;border-radius:999px;
+  border:none;cursor:pointer;font-family:inherit;font-weight:700;white-space:nowrap;
+}
+
+/* ── 조 선택 ── */
+.pair-select{padding-top:40px;text-align:center}
+.pair-select .eyebrow{font-size:.72rem;letter-spacing:.35em;color:var(--crimson);font-weight:500;margin-bottom:12px}
+.pair-select h2{font-family:'Noto Serif KR',serif;font-weight:900;font-size:1.7rem;word-break:keep-all}
+.pair-select p{margin-top:10px;font-size:.85rem;color:var(--ink-soft);word-break:keep-all}
+.pair-grid{margin-top:26px;display:grid;gap:12px}
+.pair-card{
+  display:flex;align-items:center;gap:14px;text-align:left;
+  background:var(--paper);border:2px solid var(--ink);padding:16px;cursor:pointer;
+  font-family:inherit;box-shadow:4px 4px 0 var(--stone);transition:.15s;
+}
+.pair-card:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--stone)}
+.pair-card .emoji{font-size:1.7rem;flex:none}
+.pair-card .p-name{font-family:'Noto Serif KR',serif;font-weight:700;font-size:1.05rem}
+.pair-card .p-sub{font-size:.76rem;color:var(--ink-soft)}
+.pair-card .p-st{font-size:.72rem;color:var(--crimson);font-weight:700;margin-top:2px}
+
+/* ── 홈 ── */
+.hero{padding:36px 0 24px;text-align:center}
+.hero .eyebrow{font-size:.72rem;letter-spacing:.35em;color:var(--crimson);font-weight:500;margin-bottom:14px}
+.hero h1{font-family:'Noto Serif KR',serif;font-weight:900;font-size:2.3rem;line-height:1.3;letter-spacing:.02em}
+.hero h1 .accent{color:var(--crimson)}
+.hero p.lede{margin-top:18px;color:var(--ink-soft);font-size:.92rem;text-align:left;word-break:keep-all}
+.notice{
+  margin-top:22px;background:var(--stone);border-left:4px solid var(--crimson);
+  padding:14px 16px;font-size:.85rem;text-align:left;color:var(--ink);word-break:keep-all;
+}
+.notice b{color:var(--crimson)}
+
+/* 말씀 조각 현황 */
+.verse-box{
+  margin-top:24px;border:2px solid var(--wheat);padding:18px 16px;text-align:center;background:#fff;
+}
+.verse-box .v-label{font-size:.72rem;letter-spacing:.3em;color:var(--gold);font-weight:700;margin-bottom:12px}
+.verse-chunks{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+.chunk{
+  font-family:'Noto Serif KR',serif;font-weight:700;font-size:1.05rem;
+  padding:8px 14px;border:1.5px dashed var(--line);color:var(--line);
+  letter-spacing:.05em;min-width:64px;
+}
+.chunk.got{
+  border:1.5px solid var(--wheat);color:var(--ink);background:rgba(201,162,75,.1);
+  animation:chunkIn .4s cubic-bezier(.2,1.4,.4,1) both;
+}
+@keyframes chunkIn{0%{transform:scale(1.5);opacity:0}100%{transform:scale(1);opacity:1}}
+.verse-box .v-hint{margin-top:12px;font-size:.76rem;color:var(--ink-soft);word-break:keep-all}
+
+/* 길 리스트 */
+.path{margin-top:34px;position:relative}
+.path::before{
+  content:"";position:absolute;left:23px;top:10px;bottom:10px;width:2px;
+  background:repeating-linear-gradient(to bottom, var(--line) 0 6px, transparent 6px 12px);
+}
+.zone-label{
+  position:relative;margin:30px 0 10px;padding-left:58px;
+  font-family:'Noto Serif KR',serif;font-weight:700;font-size:1.02rem;color:var(--ink);
+}
+.zone-label:first-child{margin-top:0}
+.zone-label small{font-family:'Noto Sans KR',sans-serif;font-weight:400;font-size:.72rem;color:var(--ink-soft);margin-left:8px;letter-spacing:.06em}
+.station-link{
+  position:relative;display:flex;align-items:center;gap:14px;
+  padding:12px 12px 12px 0;text-decoration:none;color:var(--ink);
+}
+.station-link .dot{
+  flex:none;width:48px;height:48px;border-radius:50%;
+  background:var(--paper);border:2px solid var(--line);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Noto Serif KR',serif;font-weight:700;font-size:1.05rem;color:var(--ink-soft);
+  transition:.2s;
+}
+.station-link.done .dot{
+  border-color:var(--crimson);color:var(--paper);background:var(--crimson);
+  box-shadow:0 0 0 4px rgba(142,31,44,.12);
+}
+.station-link.ours .dot{border-color:var(--wheat);border-width:3px}
+.station-link.ours.done .dot{border-color:var(--crimson)}
+.station-link .txt{min-width:0}
+.station-link .txt .name{font-weight:700;font-size:.95rem}
+.station-link .txt .name .ours-tag{
+  font-size:.66rem;color:var(--paper);background:var(--wheat);padding:1px 8px;border-radius:999px;
+  margin-left:6px;vertical-align:2px;font-weight:700;
+}
+.station-link .txt .sub{font-size:.76rem;color:var(--ink-soft)}
+.station-link:active .dot{transform:scale(.94)}
+
+/* ── 처 페이지 ── */
+.station-page{padding-top:28px}
+.zone-tag{display:inline-block;font-size:.72rem;letter-spacing:.2em;color:var(--paper);background:var(--crimson);padding:4px 12px;font-weight:500}
+.ours-banner{
+  margin-top:14px;display:block;line-height:1.6;
+  background:rgba(201,162,75,.12);border:1.5px solid var(--wheat);padding:10px 14px;
+  font-size:.82rem;font-weight:500;color:var(--ink);word-break:keep-all;
+}
+.ours-banner b{font-weight:700}
+.st-num{
+  margin-top:20px;font-family:'Noto Serif KR',serif;font-weight:900;
+  font-size:3.4rem;line-height:1;color:var(--stone);
+  -webkit-text-stroke:1.5px var(--crimson);letter-spacing:.02em;
+}
+.st-title{font-family:'Noto Serif KR',serif;font-weight:700;font-size:1.55rem;line-height:1.4;margin-top:6px;word-break:keep-all}
+.st-scripture{
+  margin-top:16px;padding:14px 16px;background:var(--stone);
+  font-family:'Noto Serif KR',serif;font-size:.9rem;color:var(--ink);
+  border-left:4px solid var(--gold);word-break:keep-all;
+}
+.section-label{
+  margin:30px 0 10px;display:flex;align-items:center;gap:10px;
+  font-size:.75rem;letter-spacing:.28em;color:var(--crimson);font-weight:700;
+}
+.section-label::after{content:"";flex:1;height:1px;background:var(--line)}
+.mission-card{border:2px solid var(--ink);padding:20px 18px;background:var(--paper);box-shadow:5px 5px 0 var(--stone)}
+.mission-card h3{font-family:'Noto Serif KR',serif;font-size:1.12rem;margin-bottom:10px;word-break:keep-all}
+.mission-card p, .mission-card li{font-size:.9rem;word-break:keep-all;color:var(--ink)}
+.mission-card ol{padding-left:20px;display:grid;gap:8px;margin-top:6px}
+.question{margin-top:18px;padding:16px;background:#fff;border:1px dashed var(--crimson);font-size:.92rem;word-break:keep-all}
+.question b{color:var(--crimson)}
+.pair-note{
+  margin-top:14px;padding:12px 14px;background:rgba(142,31,44,.05);
+  font-size:.82rem;color:var(--ink-soft);word-break:keep-all;
+}
+
+/* 타이머 */
+.timer{margin-top:22px;text-align:center;border:2px solid var(--crimson);padding:22px 16px}
+.timer .t-label{font-size:.75rem;letter-spacing:.3em;color:var(--crimson);font-weight:700}
+.timer .t-display{
+  font-family:'Noto Serif KR',serif;font-weight:900;font-size:3rem;line-height:1.2;
+  font-variant-numeric:tabular-nums;margin:6px 0 12px;
+}
+.timer button{font-family:inherit;font-size:.9rem;font-weight:700;background:var(--crimson);color:var(--paper);border:none;padding:12px 30px;cursor:pointer}
+.timer button:active{background:var(--crimson-deep)}
+.timer.running .t-display{color:var(--crimson)}
+
+/* 완료 + 낙관 + 말씀 조각 획득 */
+.finish-area{margin-top:34px;display:flex;flex-direction:column;align-items:center;gap:16px}
+.btn-done{
+  width:100%;font-family:inherit;font-size:1rem;font-weight:700;letter-spacing:.1em;
+  background:var(--ink);color:var(--paper);border:none;padding:16px;cursor:pointer;
+}
+.btn-done:active{transform:translateY(1px)}
+.seal{
+  width:84px;height:84px;border-radius:14px;background:var(--crimson);color:var(--paper);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Noto Serif KR',serif;font-weight:900;font-size:2rem;transform:rotate(-6deg);
+  box-shadow:inset 0 0 0 3px rgba(251,249,244,.55), inset 0 0 22px rgba(0,0,0,.22);
+  animation:stamp .38s cubic-bezier(.2,1.6,.4,1) both;
+}
+@keyframes stamp{
+  0%{transform:rotate(-6deg) scale(2.4);opacity:0}
+  60%{transform:rotate(-6deg) scale(.92);opacity:1}
+  100%{transform:rotate(-6deg) scale(1)}
+}
+.seal-note{font-size:.8rem;color:var(--ink-soft)}
+.chunk-reveal{
+  width:100%;text-align:center;border:2px solid var(--wheat);background:#fff;padding:18px;
+}
+.chunk-reveal .cr-label{font-size:.72rem;letter-spacing:.3em;color:var(--gold);font-weight:700}
+.chunk-reveal .cr-word{
+  font-family:'Noto Serif KR',serif;font-weight:900;font-size:1.9rem;margin-top:8px;
+  letter-spacing:.08em;animation:chunkIn .45s cubic-bezier(.2,1.4,.4,1) both;
+}
+.chunk-reveal .cr-hint{margin-top:8px;font-size:.76rem;color:var(--ink-soft);word-break:keep-all}
+
+/* 이전/다음 */
+.nav-row{margin-top:36px;display:flex;gap:10px}
+.nav-row a{flex:1;text-align:center;padding:13px;border:1.5px solid var(--ink);color:var(--ink);text-decoration:none;font-size:.88rem;font-weight:700}
+.nav-row a.next{background:var(--ink);color:var(--paper)}
+.nav-row a.disabled{opacity:.3;pointer-events:none}
+.back-home{display:block;margin-top:14px;text-align:center;font-size:.8rem;color:var(--ink-soft);text-decoration:none}
+
+/* 완주 화면 */
+.complete-hero{text-align:center;padding:48px 0 16px}
+.complete-hero .seal{width:110px;height:110px;font-size:2.6rem;margin:0 auto 24px}
+.complete-hero h2{font-family:'Noto Serif KR',serif;font-weight:900;font-size:1.8rem;word-break:keep-all}
+.complete-hero p{margin-top:14px;color:var(--ink-soft);font-size:.92rem;word-break:keep-all}
+.my-verse{
+  margin-top:22px;border:2px solid var(--wheat);background:#fff;padding:22px 16px;text-align:center;
+}
+.my-verse .mv-label{font-size:.72rem;letter-spacing:.3em;color:var(--gold);font-weight:700}
+.my-verse .mv-text{
+  font-family:'Noto Serif KR',serif;font-weight:900;font-size:1.5rem;margin-top:10px;
+  word-break:keep-all;line-height:1.5;
+}
+.my-verse .mv-hint{margin-top:12px;font-size:.78rem;color:var(--ink-soft);word-break:keep-all}
+
+footer{
+  max-width:480px;margin:0 auto;padding:30px 20px 46px;
+  border-top:1px solid var(--line);font-size:.72rem;color:var(--ink-soft);
+  text-align:center;letter-spacing:.05em;position:relative;z-index:1;
+}
+@media (prefers-reduced-motion: reduce){
+  .seal,.chunk,.chunk-reveal .cr-word{animation:none}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <a class="brand" href="#/">함께 걷는 길<small>남한산성 순교성지 · 십자가의 길</small></a>
+    <div class="head-right">
+      <span class="progress-pill" id="pill"><b>0</b> / 14처</span>
+      <button class="pair-pill" id="pairBtn" hidden></button>
+    </div>
+  </header>
+  <main id="view"></main>
+</div>
+<footer>2026 루카 청년회 하계 캠프 · 남한산성 순교성지</footer>
+
+<script>
+/* ═══════════════════════════════════════════
+   조 편성 설정 — members만 수정하면 됩니다.
+   1부 참가(15시 출발): 김채현 스텔라, 이유신 베네딕토, 정지훈 요셉피나,
+   이지우 레아, 이다래 모니카, 유현영 세실리아, 곽유빈 가브리엘라,
+   경현 신부님(대건 안드레아)
+   ※ 박형근 바오로는 진행자로 조 편성 제외 · 늦참(박지윤)은 순례 미참여
+   → 캠프 당일 OT 사다리타기(ladder.html) 결과대로 이름을 채워 넣으세요.
+
+   주제 구절: "너희는 따로 외딴곳으로 가서 좀 쉬어라." (마르코 6,31)
+   조 이름은 '외딴곳'에 있는 것들. 조립 순서 = 아래 순서.
+   각 조는 담당 처를 모두 완수해야 말씀 조각이 열립니다.
+═══════════════════════════════════════════ */
+const PAIRS = [
+ {id:"wind",   emoji:"🍃", name:"바람조", members:"조원을 입력하세요", stations:[1,5,9,13],  segment:"너희는"},
+ {id:"shade",  emoji:"🌳", name:"그늘조", members:"조원을 입력하세요", stations:[2,6,10,14], segment:"따로"},
+ {id:"spring", emoji:"💧", name:"샘물조", members:"조원을 입력하세요", stations:[3,7,11],    segment:"외딴곳으로 가서"},
+ {id:"flower", emoji:"🌼", name:"들꽃조", members:"조원을 입력하세요", stations:[4,8,12],    segment:"좀 쉬어라."},
+];
+/* 들꽃조는 담당 처가 3곳인 대신, 마무리 모임에서 말씀 조각 조립을 이끕니다. */
+
+const ZONES = {
+  1:{no:"1구역", name:"선고받다", range:"1 – 3처"},
+  2:{no:"2구역", name:"만나다", range:"4 – 6처"},
+  3:{no:"3구역", name:"쓰러지다", range:"7 – 11처"},
+  4:{no:"4구역", name:"머물다", range:"12 – 14처"},
+};
+
+const STATIONS = [
+ {n:1, zone:1, title:"예수님께서 사형 선고 받으심",
+  med:"죄 없는 분이 죄인의 자리에 서셨습니다. 이 자리에서 순교자들도 같은 선고를 받았습니다.",
+  mission:{h:"묵상 낭독",
+   steps:["두 사람이 번갈아 제1처 기도문을 낭독합니다. (진행자가 준비한 기도서 사용)","낭독이 끝나면 아래 질문에 서로 답합니다."],
+   q:"내가 <b>부당하게 오해받았던 순간</b>은 언제였나요? 그때 나는 어떻게 반응했나요?"}},
+ {n:2, zone:1, title:"예수님께서 십자가를 지심",
+  med:"십자가는 혼자 지는 것이 아니라, 함께 나누어 지라고 주어진 것입니다.",
+  mission:{h:"성물을 품고 걷기",
+   steps:["조에게 주어진 <b>성물상</b>을 받습니다. 오랫동안 기도를 받다가 이제는 물러난, 낡고 버려질 뻔한 성물입니다.","지금부터 마지막 처까지, 두 사람이 <b>번갈아 품에 안고</b> 이동합니다.","떨어뜨리지 않게, 짐이 아니라 <b>맡겨진 분</b>처럼 모십니다."],
+   q:"지금 내 삶에서 <b>내가 지고 가는 십자가</b>는 무엇인가요? (마음속으로만 생각하며 걷기)"}},
+ {n:3, zone:1, title:"예수님께서 처음 넘어지심",
+  med:"이곳 남한산성에서는 21위의 순교자와 300여 명의 무명 순교자가 신앙을 지켰습니다.",
+  mission:{h:"순교자 카드 뽑기",
+   steps:["봉투(또는 진행자)에게서 <b>순교자 카드</b>를 한 장 뽑습니다.","카드에 적힌 순교자의 이름과 이야기를 두 사람이 함께 읽습니다.","이 분이 오늘 순례의 <b>우리 조 동행자</b>가 됩니다. 이동할 때마다 이름을 기억해 주세요."],
+   q:"우리 조의 동행 순교자는 누구입니까? 그분의 이야기에서 <b>가장 마음에 남는 한 장면</b>은?"}},
+ {n:4, zone:2, title:"예수님께서 어머니를 만나심",
+  med:"가장 아픈 길 위에서도 만남은 있었습니다. 나를 붙들어 준 사람을 기억합니다.",
+  mission:{h:"감사 편지 미션",
+   steps:["순례 수첩의 편지 칸을 폅니다.","<b>신앙의 길에서 나를 붙들어 준 한 사람</b>에게 짧은 메모를 씁니다. (3~5문장)","캠프가 끝나면 실제로 전달하는 것까지가 미션입니다."],
+   q:"그 사람이 없었다면, 지금의 나는 어디쯤 있었을까요?"}},
+ {n:5, zone:2, title:"시몬이 예수님을 도와 십자가를 짐",
+  med:"시몬은 우연히 그 길에 있었지만, 그의 어깨는 역사가 되었습니다.",
+  mission:{h:"시몬의 어깨",
+   steps:["지금 성물상을 품고 있지 않은 사람이 <b>성물상을 넘겨받습니다</b>.","다음 처까지, 두 사람이 <b>어깨동무를 하고</b> 이동합니다."],
+   q:"누군가의 짐을 <b>대신 져 본 경험</b>이 있나요? 그때 어떤 마음이었나요?"}},
+ {n:6, zone:2, title:"베로니카가 예수님의 얼굴을 닦아 드림",
+  med:"수건 한 장의 용기. 작은 위로가 얼굴에 새겨졌습니다.",
+  mission:{h:"베로니카의 수건",
+   steps:["순례 수첩 한 페이지에 <b>내 짝의 얼굴</b>을 그립니다. (잘 그리는 것보다 정성!)","그림 옆에 짝의 <b>장점 3가지</b>를 적습니다.","서로 교환하고, 한 가지씩 소리 내어 읽어 줍니다."],
+   q:null}},
+ {n:7, zone:3, title:"예수님께서 두 번째 넘어지심",
+  med:"복자 한덕운 토마스. 그는 박해로 버려진 순교자들의 시신을 홀로 거두었습니다. 그것이 자신을 드러내는 일임을 알면서도. — 지금 여러분이 품고 걷는 성물처럼, 그는 버려진 이들을 품었습니다.",
+  mission:{h:"한덕운 이야기 ①",
+   steps:["수첩에 있는 <b>한덕운 토마스의 이야기 ①</b>을 한 사람이 소리 내어 읽습니다.","이야기가 끝나면 아래 질문에 서로 답합니다."],
+   q:"<b>손해를 알면서도 옳은 일을 선택한 적</b>이 있나요? 혹은, 알면서도 피한 적은?"}},
+ {n:8, zone:3, title:"예수님께서 예루살렘 부인들을 위로하심",
+  med:"말이 없어도 전해지는 것이 있습니다. 지금부터 침묵으로 걷습니다.",
+  mission:{h:"침묵 구간",
+   steps:["아래 타이머를 시작하고, 9처까지 <b>완전한 침묵</b>으로 이동합니다.","말 대신 눈빛과 손짓만 사용합니다.","성물상 교대도 말없이."],
+   q:null},
+  timer:{sec:180, label:"침묵 이동"}},
+ {n:9, zone:3, title:"예수님께서 세 번째 넘어지심",
+  med:"세 번째 넘어짐. 나는 같은 자리에서 몇 번이나 넘어졌을까.",
+  mission:{h:"세 번째 넘어짐",
+   steps:["순례 수첩의 봉인 카드에, <b>내가 반복해서 넘어지는 것 한 가지</b>를 적습니다.","짝에게도 보여 주지 않고 접어서 봉투에 넣어 봉인합니다.","이 봉투는 14처에서 함께 봉헌합니다."],
+   q:null}},
+ {n:10, zone:3, title:"예수님께서 옷 벗김을 당하심",
+  med:"움켜쥔 것을 내려놓을 때, 비로소 가벼워집니다.",
+  mission:{h:"내려놓기",
+   steps:["소지품 중 하나를 골라 짝의 가방에 <b>잠시 맡깁니다</b>. (휴대폰 추천 — 이 페이지는 한 사람 폰으로 충분합니다)","다음 처까지 그것 없이 걷습니다."],
+   q:"방금 내려놓은 그것 없이 걷는 지금, <b>무엇이 제일 허전한가요?</b>"}},
+ {n:11, zone:3, title:"예수님께서 십자가에 못 박히심",
+  med:"1802년 1월 30일, 한덕운 토마스는 남한산성 동문 밖에서 참수로 순교했습니다.",
+  mission:{h:"한덕운 이야기 ②",
+   steps:["수첩에 있는 <b>한덕운의 마지막 이야기 ②</b>를 다른 한 사람이 소리 내어 읽습니다.","서로 아래 질문에 <b>한 문장씩</b> 답합니다."],
+   q:"그 순간, 그는 <b>무슨 생각을 했을까요?</b> 한 문장으로."}},
+ {n:12, zone:4, title:"예수님께서 십자가 위에서 돌아가심",
+  med:"모든 것이 멈추는 시간. 아무것도 하지 않는 것이 이 처의 미션입니다.",
+  mission:{h:"침묵 3분",
+   steps:["십자가 앞에 앉거나 섭니다.","타이머를 시작하고, <b>3분간 아무 말 없이</b> 머뭅니다."],
+   q:null},
+  timer:{sec:180, label:"침묵 기도"}},
+ {n:13, zone:4, title:"제자들이 예수님의 시신을 십자가에서 내림",
+  med:"한덕운이 순교자의 시신을 끌어안았듯, 우리도 서로를 품습니다. (동선이 가능하면 피에타상 앞에서 진행합니다.)",
+  mission:{h:"피에타 — 서로를 품기",
+   steps:["'남한산성의 피에타'상 앞에 섭니다.","<b>말없이 서로를 안아 줍니다</b>.","쑥스러워도 괜찮습니다. 이것이 오늘 가장 중요한 미션일 수 있습니다."],
+   q:null}},
+ {n:14, zone:4, title:"예수님께서 무덤에 묻히심",
+  med:"무덤은 끝이 아니라 씨앗이 심긴 자리입니다.",
+  mission:{h:"무덤에서 씨앗으로",
+   steps:["9처에서 봉인한 봉투를 마무리 모임 장소의 <b>봉헌 바구니</b>에 넣습니다.","순례 수첩 마지막 장에, 그 넘어짐을 <b>새로 시작하고 싶은 것 한 문장</b>으로 바꿔 적습니다.","이 문장은 마무리 모임에서 함께 낭독합니다."],
+   q:null}},
+];
+
+/* ─────────── 상태 ─────────── */
+let doneSet = new Set();
+let myPairId = null;
+let myMembers = null; // 사다리타기 QR로 전달받은 조원 이름
+function loadState(){
+  try{
+    const raw = localStorage.getItem("pilgrim-done");
+    if(raw) doneSet = new Set(JSON.parse(raw));
+    myPairId = localStorage.getItem("pilgrim-pair") || null;
+    myMembers = localStorage.getItem("pilgrim-members") || null;
+  }catch(e){}
+}
+function saveState(){
+  try{
+    localStorage.setItem("pilgrim-done", JSON.stringify([...doneSet]));
+    if(myPairId) localStorage.setItem("pilgrim-pair", myPairId);
+    if(myMembers) localStorage.setItem("pilgrim-members", myMembers);
+  }catch(e){}
+}
+function myPair(){ return PAIRS.find(p=>p.id===myPairId) || null; }
+function updateHeader(){
+  document.getElementById("pill").innerHTML = `<b>${doneSet.size}</b> / 14처`;
+  const pb = document.getElementById("pairBtn");
+  const p = myPair();
+  if(p){ pb.hidden=false; pb.textContent = `${p.emoji} ${p.name}`; }
+  else pb.hidden=true;
+}
+document.getElementById("pairBtn").addEventListener("click", ()=>{
+  if(confirm("조를 다시 선택할까요? (진행 상태는 유지됩니다)")){
+    myPairId=null; myMembers=null;
+    try{
+      localStorage.removeItem("pilgrim-pair");
+      localStorage.removeItem("pilgrim-members");
+    }catch(e){}
+    route();
+  }
+});
+
+/* ─────────── 렌더 ─────────── */
+const view = document.getElementById("view");
+
+function renderPairSelect(){
+  view.innerHTML = `
+    <div class="pair-select">
+      <div class="eyebrow">2026 루카 청년회 하계 캠프</div>
+      <h2>우리 조를 선택하세요</h2>
+      <p>두 사람이 한 조가 되어 걷습니다.<br>각 조는 담당 처에서 <b>말씀 조각</b>을 모읍니다.<br>다섯 조의 조각이 모두 모이면, 캠프의 주제 구절이 완성됩니다.</p>
+      <div class="pair-grid">
+        ${PAIRS.map(p=>`
+          <button class="pair-card" data-pair="${p.id}">
+            <span class="emoji">${p.emoji}</span>
+            <span>
+              <span class="p-name">${p.name}</span>
+              <span class="p-sub"> · ${p.members}</span>
+              <div class="p-st">담당: ${p.stations.map(n=>`제${n}처`).join(", ")}${p.id==="flower"?" + 마무리 조립":""}</div>
+            </span>
+          </button>`).join("")}
+      </div>
+    </div>`;
+  view.querySelectorAll(".pair-card").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      myPairId = btn.dataset.pair; saveState(); updateHeader(); route();
+    });
+  });
+}
+
+function renderHome(){
+  const p = myPair();
+  let listHtml = "";
+  let currentZone = 0;
+  STATIONS.forEach(s=>{
+    if(s.zone !== currentZone){
+      currentZone = s.zone;
+      const z = ZONES[currentZone];
+      listHtml += `<div class="zone-label">${z.no} · ${z.name}<small>${z.range}</small></div>`;
+    }
+    const done = doneSet.has(s.n);
+    const ours = p && p.stations.includes(s.n);
+    listHtml += `
+      <a class="station-link ${done?"done":""} ${ours?"ours":""}" href="#/${s.n}">
+        <span class="dot">${done?"✓":s.n}</span>
+        <span class="txt">
+          <span class="name">제${s.n}처${ours?'<span class="ours-tag">담당</span>':""}</span>
+          <span class="sub">${s.title}</span>
+        </span>
+      </a>`;
+  });
+
+  const allDone = doneSet.size === 14;
+  let verseHtml = "";
+  if(p){
+    const gotAll = p.stations.every(n=>doneSet.has(n));
+    const doneCnt = p.stations.filter(n=>doneSet.has(n)).length;
+    verseHtml = `
+      <div class="verse-box">
+        <div class="v-label">${p.emoji} ${p.name}${myMembers?` · ${myMembers.split(",").join(" · ")}`:""}의 말씀 조각</div>
+        <div class="verse-chunks">
+          ${gotAll
+            ? `<span class="chunk got" style="font-size:1.4rem;letter-spacing:.1em">${p.segment}</span>`
+            : p.stations.map(n=>{
+                const got = doneSet.has(n);
+                return `<span class="chunk ${got?"got":""}">${got?"🔓":"🔒"}<small style="display:block;font-size:.62rem;font-weight:400">제${n}처</small></span>`;
+              }).join("")}
+        </div>
+        <div class="v-hint">${gotAll
+          ? "말씀 조각이 열렸습니다! 마무리 모임에서 다른 조의 조각과 이어 붙입니다."
+          : `담당 처 ${doneCnt} / ${p.stations.length} 완료 — 모두 완수하면 조각이 열립니다.`}</div>
+      </div>`;
+  }
+
+  view.innerHTML = `
+    ${allDone ? `
+    <div class="complete-hero">
+      <div class="seal">完</div>
+      <h2>열네 걸음을 모두 걸었습니다</h2>
+      ${p ? `
+      <div class="my-verse">
+        <div class="mv-label">${p.emoji} ${p.name}이 모은 말씀</div>
+        <div class="mv-text">"${p.segment}"</div>
+        <div class="mv-hint">이 조각의 자리는 아직 비밀입니다.<br>마무리 모임에서 다섯 조의 조각을 이어 붙이면,<br>이번 캠프의 주제 구절이 완성됩니다.</div>
+      </div>` : ""}
+      <p>순례 수첩과 봉인 봉투를 들고<br>마무리 모임 장소로 모여 주세요.</p>
+    </div>` : `
+    <div class="hero">
+      <div class="eyebrow">남한산성 순교성지</div>
+      <h1>함께 걷는<br><span class="accent">길</span></h1>
+      <p class="lede">이 길에서 21위의 순교자와 300여 명의 무명 순교자가 신앙을 지켰습니다. 오늘 우리는 둘씩 짝이 되어, 그 길을 열네 걸음으로 따라 걷습니다. 각 처의 미션을 마치고 '다음 처' 버튼으로 이동하세요.</p>
+      <div class="notice">
+        <b>순례 약속</b> · 뛰지 않기 · 다른 순례자를 배려하기 · 미션보다 마음이 먼저 · 조당 폰 하나로 함께 보기
+      </div>
+    </div>`}
+    ${verseHtml}
+    <div class="path">${listHtml}</div>`;
+}
+
+function renderStation(n){
+  const s = STATIONS.find(x=>x.n===n);
+  if(!s){ location.hash = "#/"; return; }
+  const z = ZONES[s.zone];
+  const done = doneSet.has(n);
+  const p = myPair();
+  const ours = p && p.stations.includes(n);
+  const prev = n>1 ? `#/${n-1}` : null;
+  const next = n<14 ? `#/${n+1}` : "#/";
+
+  view.innerHTML = `
+    <div class="station-page">
+      <span class="zone-tag">${z.no} ${z.name}</span>
+      ${ours ? `<div class="ours-banner">${p.emoji} 이곳은 <b>${p.name}의 담당 처</b>입니다. 미션을 마치면 말씀 조각에 가까워집니다.</div>` : ""}
+      <div class="st-num">제${n}처</div>
+      <h2 class="st-title">${s.title}</h2>
+      <div class="st-scripture">${s.med}</div>
+
+      <div class="section-label">MISSION</div>
+      <div class="mission-card">
+        <h3>${s.mission.h}</h3>
+        <ol>${s.mission.steps.map(t=>`<li>${t}</li>`).join("")}</ol>
+      </div>
+      ${s.mission.q ? `<div class="question">💬 <b>나눔 질문</b><br>${s.mission.q}</div>` : ""}
+      ${ours ? "" : `<div class="pair-note">이 처는 다른 조의 담당 처이지만, 미션과 나눔은 모든 조가 수행합니다.</div>`}
+
+      ${s.timer ? `
+      <div class="timer" id="timerBox">
+        <div class="t-label">${s.timer.label}</div>
+        <div class="t-display" id="timerDisplay">${fmt(s.timer.sec)}</div>
+        <button id="timerBtn" data-sec="${s.timer.sec}">시작하기</button>
+      </div>` : ""}
+
+      <div class="finish-area">
+        ${done
+          ? (()=> {
+              if(!ours) return `<div class="seal">${n===14?"完":"畢"}</div><div class="seal-note">이 처의 미션을 마쳤습니다</div>`;
+              const cnt = p.stations.filter(x=>doneSet.has(x)).length;
+              const all = cnt === p.stations.length;
+              return `<div class="seal">${n===14?"完":"畢"}</div>
+             <div class="chunk-reveal">
+               ${all ? `
+               <div class="cr-label">말씀 조각 해제</div>
+               <div class="cr-word">${p.segment}</div>
+               <div class="cr-hint">${p.name}의 담당 처를 모두 완수했습니다!<br>이 조각을 마무리 모임까지 소중히 간직하세요.</div>`
+               : `
+               <div class="cr-label">봉인 ${cnt} / ${p.stations.length} 해제</div>
+               <div class="cr-word">🔓</div>
+               <div class="cr-hint">담당 처 ${p.stations.length - cnt}곳이 남았습니다.<br>모두 완수하면 ${p.name}의 말씀 조각이 열립니다.</div>`}
+             </div>`;
+            })()
+          : `<button class="btn-done" id="btnDone">미션 완료 — 도장 찍기</button>`}
+      </div>
+
+      <div class="nav-row">
+        <a href="${prev??"#/"}" class="${prev?"":"disabled"}">← 제${n-1}처</a>
+        <a href="${next}" class="next">${n<14 ? `제${n+1}처 →` : "전체 보기"}</a>
+      </div>
+      <a class="back-home" href="#/">전체 순례길 보기</a>
+    </div>`;
+
+  const btn = document.getElementById("btnDone");
+  if(btn){
+    btn.addEventListener("click", ()=>{
+      doneSet.add(n); saveState(); updateHeader(); renderStation(n);
+      if(navigator.vibrate) navigator.vibrate(60);
+    });
+  }
+  const tBtn = document.getElementById("timerBtn");
+  if(tBtn){
+    tBtn.addEventListener("click", ()=> startTimer(parseInt(tBtn.dataset.sec,10)));
+  }
+}
+
+/* ─────────── 타이머 ─────────── */
+let timerId = null;
+function fmt(sec){
+  const m = Math.floor(sec/60), s = sec%60;
+  return `${m}:${String(s).padStart(2,"0")}`;
+}
+function startTimer(total){
+  clearInterval(timerId);
+  const box = document.getElementById("timerBox");
+  const disp = document.getElementById("timerDisplay");
+  const btn = document.getElementById("timerBtn");
+  let remain = total;
+  box.classList.add("running");
+  btn.textContent = "침묵 중…";
+  btn.disabled = true;
+  disp.textContent = fmt(remain);
+  timerId = setInterval(()=>{
+    remain--;
+    disp.textContent = fmt(Math.max(remain,0));
+    if(remain<=0){
+      clearInterval(timerId);
+      box.classList.remove("running");
+      disp.textContent = "끝";
+      btn.textContent = "다시 시작";
+      btn.disabled = false;
+      if(navigator.vibrate) navigator.vibrate([120,80,120]);
+    }
+  },1000);
+}
+
+/* ─────────── 라우팅 ─────────── */
+function route(){
+  clearInterval(timerId);
+  window.scrollTo(0,0);
+
+  // 사다리타기 QR 자동 접속: #/join/조ID/이름들
+  const hash = location.hash;
+  if(hash.startsWith("#/join/")){
+    const parts = hash.slice(7).split("/");
+    const t = PAIRS.find(p=>p.id===parts[0]);
+    if(t){
+      myPairId = t.id;
+      try{ myMembers = decodeURIComponent(parts.slice(1).join("/")) || null; }
+      catch(e){ myMembers = null; }
+      saveState();
+    }
+    history.replaceState(null, "", location.pathname + "#/");
+  }
+
+  updateHeader();
+  if(!myPairId){ renderPairSelect(); return; }
+  const h = location.hash.replace("#/","").trim();
+  const n = parseInt(h,10);
+  if(h==="" || isNaN(n)) renderHome();
+  else renderStation(Math.min(Math.max(n,1),14));
+}
+window.addEventListener("hashchange", route);
+loadState();
+route();
+</script>
+</body>
+</html>
